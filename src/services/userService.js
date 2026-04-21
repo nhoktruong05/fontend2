@@ -18,15 +18,11 @@ export const uploadAvatarApi = (id, file) => {
   const formData = new FormData();
   formData.append("file", file);
 
-  return axios.post(
-    `http://localhost:8080/api/v1/users/upload-avatar/${id}`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+  return api.post(`/v1/users/upload-avatar/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
     },
-  );
+  });
 };
 /**
  * Đổi mật khẩu
