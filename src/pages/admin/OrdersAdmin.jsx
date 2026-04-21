@@ -7,7 +7,7 @@ import BaseTable from "../../components/common/BaseTable";
 import AppPagination from "../../components/common/AppPagination";
 import TableActions from "../../components/common/TableActions";
 
-import { mockOrders } from "../../data/mockData";
+import { mockOrders } from "../../data/mockOrders";
 
 const pageSize = 5;
 

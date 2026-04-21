@@ -17,15 +17,15 @@ import AdminVouchers from "./pages/admin/VouchersAdmin";
 import AdminOrders from "./pages/admin/OrdersAdmin";
 import AdminTableBookings from "./pages/admin/TableBookingsAdmin";
 import AdminBanners from "./pages/admin/BannersAdmin";
-import AdminReviews from "./pages/admin/ReviewsAdmin";
+import AdminInventory from "./pages/admin/InventoryAdmin";
 import CustomerHome from "./pages/customer/Home";
 import CustomerCart from "./pages/customer/Cart";
 import CustomerOrders from "./pages/customer/Orders";
 import CustomerFavorites from "./pages/customer/Favorites";
 import CustomerSupport from "./pages/customer/Support";
-import CustomerFoodDetail from "./pages/customer/FoodDetail";
 import CustomerTableOrder from "./pages/customer/TableOrder";
 import CustomerTableQrSamples from "./pages/customer/TableQrSamples";
+import CustomerBlog from "./pages/customer/Blog";
 import CustomerLayout from "./layouts/customer/UserLayout";
 import FoodDetail from "./pages/customer/FoodDetail";
 
@@ -67,6 +67,7 @@ const App = () => {
           <Route path="carts" element={<CustomerCart />} />
           <Route path="orders" element={<CustomerOrders />} />
           <Route path="favorites" element={<CustomerFavorites />} />
+          <Route path="blog" element={<CustomerBlog />} />
           <Route path="support" element={<CustomerSupport />} />
           <Route path="table-order" element={<CustomerTableOrder />} />
           <Route path="table-qr-samples" element={<CustomerTableQrSamples />} />
@@ -83,12 +84,12 @@ const App = () => {
           <Route index element={<Dashboard />} />
           <Route path="user" element={<AdminUsers />} />
           <Route path="foods" element={<AdminFoods />} />
+          <Route path="inventory" element={<AdminInventory />} />
           <Route path="categories" element={<AdminCategories />} />
           <Route path="vouchers" element={<AdminVouchers />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="table-bookings" element={<AdminTableBookings />} />
           <Route path="banners" element={<AdminBanners />} />
-          <Route path="reviews" element={<AdminReviews />} />
         </Route>
 
         {/* 404 Page */}

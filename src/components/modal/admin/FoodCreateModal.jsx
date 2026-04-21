@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Input, InputNumber, Modal, Select, message } from "antd";
-import FoodImage from "../../common/FoodImage";
 import { Upload, Image, Button, Row, Col } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 
@@ -19,40 +18,6 @@ const parseAdditionalImages = (value) =>
     .filter(Boolean);
 
 const FoodCreateModal = ({ open, onCancel, onSubmit, categories, form }) => {
-  const handleUploadImage = async (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    try {
-      const dataUrl = await fileToDataUrl(file);
-      form.setFieldValue("image", dataUrl);
-      message.success("Tải ảnh thành công");
-    } catch {
-      message.error("Không thể đọc ảnh. Vui lòng thử lại.");
-    } finally {
-      event.target.value = "";
-    }
-  };
-
-  const handleUploadAdditionalImages = async (event) => {
-    const files = Array.from(event.target.files || []);
-    if (files.length === 0) return;
-    try {
-      const dataUrls = await Promise.all(
-        files.map((file) => fileToDataUrl(file)),
-      );
-      const current = parseAdditionalImages(
-        form.getFieldValue("additionalImages"),
-      );
-      const next = [...current, ...dataUrls].filter(Boolean);
-      form.setFieldValue("additionalImages", next.join("\n"));
-      message.success("Tải ảnh phụ thành công");
-    } catch {
-      message.error("Không thể đọc ảnh phụ. Vui lòng thử lại.");
-    } finally {
-      event.target.value = "";
-    }
-  };
-
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
@@ -75,82 +40,110 @@ const FoodCreateModal = ({ open, onCancel, onSubmit, categories, form }) => {
       open={open}
       onCancel={handleCancel}
       onOk={handleOk}
-      width={600}
+      width={720}
+      okText="Lưu món ăn"
+      cancelText="Hủy"
     >
       <Form form={form} layout="vertical">
-        {/* NAME + CATEGORY */}
-        <Row gutter={12}>
-          <Col span={12}>
-            <Form.Item
-              name="name"
-              label="Tên món"
-              rules={[{ required: true, message: "Nhập tên món" }]}
-            >
-              <Input placeholder="Nhập tên món ăn" />
-            </Form.Item>
-          </Col>
-
-          <Col span={12}>
-            <Form.Item
-              name="category"
-              label="Danh mục"
-              rules={[{ required: true, message: "Chọn danh mục" }]}
-            >
-              <Select
-                options={categories.map((c) => ({
-                  value: c.id,
-                  label: c.name,
-                }))}
-                placeholder="Chọn danh mục"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item name="desc" label="Mô tả">
-          <Input.TextArea rows={3} placeholder="Nhập mô tả món ăn" />
-        </Form.Item>
-        {/* PRICE */}
-        <Form.Item
-          name="priceInThousand"
-          label="Giá bán (nghìn đồng)"
-          rules={[{ required: true, message: "Nhập giá bán" }]}
+        <div
+          style={{
+            border: "1px solid #e5e7eb",
+            borderRadius: 12,
+            padding: 14,
+            marginBottom: 14,
+          }}
         >
-          <InputNumber min={1} style={{ width: "100%" }} addonAfter=".000 đ" />
-        </Form.Item>
+          <p style={{ margin: "0 0 12px", fontWeight: 700, color: "#111827" }}>
+            Thông tin cơ bản
+          </p>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item
+                name="name"
+                label="Tên món"
+                rules={[{ required: true, message: "Nhập tên món" }]}
+              >
+                <Input placeholder="Nhập tên món ăn" />
+              </Form.Item>
+            </Col>
 
-        {/* IMAGE AVATAR */}
-        <Form.Item
-          label="Ảnh đại diện"
-          required
-          rules={[
-            {
-              validator: () => {
-                if (!form.getFieldValue("image")) {
-                  return Promise.reject("Chọn hoặc nhập ảnh đại diện");
-                }
-                return Promise.resolve();
+            <Col span={12}>
+              <Form.Item
+                name="category"
+                label="Danh mục"
+                rules={[{ required: true, message: "Chọn danh mục" }]}
+              >
+                <Select
+                  options={categories.map((c) => ({
+                    value: c.id,
+                    label: c.name,
+                  }))}
+                  placeholder="Chọn danh mục"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item
+                name="priceInThousand"
+                label="Giá bán (nghìn đồng)"
+                rules={[{ required: true, message: "Nhập giá bán" }]}
+              >
+                <InputNumber
+                  min={1}
+                  style={{ width: "100%" }}
+                  addonAfter=".000 đ"
+                  placeholder="Ví dụ: 89"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="desc" label="Mô tả">
+                <Input.TextArea rows={3} placeholder="Nhập mô tả món ăn" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </div>
+
+        <div
+          style={{
+            border: "1px solid #e5e7eb",
+            borderRadius: 12,
+            padding: 14,
+          }}
+        >
+          <p style={{ margin: "0 0 12px", fontWeight: 700, color: "#111827" }}>
+            Hình ảnh món ăn
+          </p>
+          <Form.Item
+            label="Ảnh đại diện"
+            required
+            rules={[
+              {
+                validator: () => {
+                  if (!form.getFieldValue("image")) {
+                    return Promise.reject("Chọn hoặc nhập ảnh đại diện");
+                  }
+                  return Promise.resolve();
+                },
               },
-            },
-          ]}
-        >
-          <Form.Item shouldUpdate noStyle>
-            {() => {
-              const image = form.getFieldValue("image");
+            ]}
+          >
+            <Form.Item shouldUpdate noStyle>
+              {() => {
+                const image = form.getFieldValue("image");
 
-              return (
-                <div style={{ display: "flex", gap: 16 }}>
-                  {/* LEFT */}
-                  <div style={{ flex: 1 }}>
-                    <Input
-                      placeholder="Nhập link ảnh..."
-                      value={image}
-                      onChange={(e) =>
-                        form.setFieldValue("image", e.target.value)
-                      }
-                      style={{ marginBottom: 8 }}
-                    />
+                return (
+                  <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                    <div style={{ flex: 1 }}>
+                      <Input
+                        placeholder="Nhập link ảnh..."
+                        value={image}
+                        onChange={(e) => form.setFieldValue("image", e.target.value)}
+                        style={{ marginBottom: 8 }}
+                      />
 
-                    {!image && (
                       <Upload
                         showUploadList={false}
                         beforeUpload={async (file) => {
@@ -159,151 +152,135 @@ const FoodCreateModal = ({ open, onCancel, onSubmit, categories, form }) => {
                           return false;
                         }}
                       >
-                        <Button icon={<PlusOutlined />}>Tải ảnh</Button>
+                        <Button icon={<PlusOutlined />}>Tải ảnh từ máy</Button>
                       </Upload>
-                    )}
-                  </div>
-
-                  {/* RIGHT */}
-                  {image && (
-                    <div style={{ position: "relative" }}>
-                      <Image
-                        src={image}
-                        width={100}
-                        height={100}
-                        style={{
-                          objectFit: "cover",
-                          borderRadius: 8,
-                        }}
-                      />
-
-                      <Button
-                        danger
-                        size="small"
-                        icon={<DeleteOutlined />}
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                        }}
-                        onClick={() => form.setFieldValue("image", "")}
-                      />
                     </div>
-                  )}
-                </div>
-              );
-            }}
-          </Form.Item>
-        </Form.Item>
 
-        {/* ADDITIONAL IMAGES */}
-        <Form.Item label="Ảnh phụ">
-          <Form.Item shouldUpdate noStyle>
-            {() => {
-              const images = parseAdditionalImages(
-                form.getFieldValue("additionalImages"),
-              );
-
-              return (
-                <>
-                  {/* INPUT LINK */}
-                  <Input.Search
-                    placeholder="Nhập link ảnh phụ rồi nhấn Enter"
-                    enterButton="Thêm"
-                    onSearch={(value) => {
-                      if (!value) return;
-                      const current = [...images];
-                      form.setFieldValue(
-                        "additionalImages",
-                        [...current, value].join("\n"),
-                      );
-                    }}
-                    style={{ marginBottom: 10 }}
-                  />
-
-                  {/* GRID */}
-                  <div
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: 10,
-                    }}
-                  >
-                    {images.map((img, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          position: "relative",
-                          width: 80,
-                          height: 80,
-                        }}
-                      >
-                        <Image
-                          src={img}
-                          width={80}
-                          height={80}
-                          style={{
-                            objectFit: "cover",
-                            borderRadius: 8,
-                          }}
-                        />
-
-                        <Button
-                          danger
-                          size="small"
-                          icon={<DeleteOutlined />}
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            right: 0,
-                          }}
-                          onClick={() => {
-                            const list = [...images];
-                            list.splice(index, 1);
-                            form.setFieldValue(
-                              "additionalImages",
-                              list.join("\n"),
-                            );
-                          }}
-                        />
-                      </div>
-                    ))}
-
-                    {/* UPLOAD */}
-                    <Upload
-                      multiple
-                      showUploadList={false}
-                      beforeUpload={async (file) => {
-                        const base64 = await fileToDataUrl(file);
-                        const current = [...images];
-                        form.setFieldValue(
-                          "additionalImages",
-                          [...current, base64].join("\n"),
-                        );
-                        return false;
+                    <div
+                      style={{
+                        width: 118,
+                        height: 118,
+                        border: "1px dashed #d1d5db",
+                        borderRadius: 10,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                        position: "relative",
+                        background: "#f9fafb",
                       }}
                     >
-                      <div
-                        style={{
-                          width: 80,
-                          height: 80,
-                          border: "1px dashed #d9d9d9",
-                          borderRadius: 8,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
+                      {image ? (
+                        <>
+                          <Image
+                            src={image}
+                            width={118}
+                            height={118}
+                            style={{ objectFit: "cover" }}
+                          />
+                          <Button
+                            danger
+                            size="small"
+                            icon={<DeleteOutlined />}
+                            style={{ position: "absolute", top: 6, right: 6 }}
+                            onClick={() => form.setFieldValue("image", "")}
+                          />
+                        </>
+                      ) : (
+                        <span style={{ color: "#9ca3af", fontSize: 12 }}>Preview</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              }}
+            </Form.Item>
+          </Form.Item>
+
+          <Form.Item label="Ảnh phụ">
+            <Form.Item shouldUpdate noStyle>
+              {() => {
+                const images = parseAdditionalImages(
+                  form.getFieldValue("additionalImages"),
+                );
+
+                return (
+                  <>
+                    <Input.Search
+                      placeholder="Nhập link ảnh phụ rồi nhấn Enter"
+                      enterButton="Thêm"
+                      onSearch={(value) => {
+                        const trimmed = value.trim();
+                        if (!trimmed) return;
+                        form.setFieldValue(
+                          "additionalImages",
+                          [...images, trimmed].join("\n"),
+                        );
+                      }}
+                      style={{ marginBottom: 10 }}
+                    />
+
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                      {images.map((img, index) => (
+                        <div
+                          key={index}
+                          style={{ position: "relative", width: 80, height: 80 }}
+                        >
+                          <Image
+                            src={img}
+                            width={80}
+                            height={80}
+                            style={{ objectFit: "cover", borderRadius: 8 }}
+                          />
+
+                          <Button
+                            danger
+                            size="small"
+                            icon={<DeleteOutlined />}
+                            style={{ position: "absolute", top: 2, right: 2 }}
+                            onClick={() => {
+                              const list = [...images];
+                              list.splice(index, 1);
+                              form.setFieldValue("additionalImages", list.join("\n"));
+                            }}
+                          />
+                        </div>
+                      ))}
+
+                      <Upload
+                        multiple
+                        showUploadList={false}
+                        beforeUpload={async (file) => {
+                          const base64 = await fileToDataUrl(file);
+                          form.setFieldValue(
+                            "additionalImages",
+                            [...images, base64].join("\n"),
+                          );
+                          return false;
                         }}
                       >
-                        <PlusOutlined />
-                      </div>
-                    </Upload>
-                  </div>
-                </>
-              );
-            }}
+                        <div
+                          style={{
+                            width: 80,
+                            height: 80,
+                            border: "1px dashed #d1d5db",
+                            borderRadius: 8,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            cursor: "pointer",
+                            background: "#f9fafb",
+                          }}
+                        >
+                          <PlusOutlined />
+                        </div>
+                      </Upload>
+                    </div>
+                  </>
+                );
+              }}
+            </Form.Item>
           </Form.Item>
-        </Form.Item>
+        </div>
       </Form>
     </Modal>
   );

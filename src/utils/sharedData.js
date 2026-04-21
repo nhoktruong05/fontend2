@@ -1,4 +1,8 @@
-import { mockCategories, mockMenuItems, mockVouchers } from "../data/mockData";
+import {
+  mockCategories,
+  mockMenuItems,
+  mockVouchers,
+} from "../data/mockSharedData";
 
 export const SHARED_DATA_UPDATED_EVENT = "shared-data-updated";
 

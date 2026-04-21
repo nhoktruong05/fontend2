@@ -9,6 +9,7 @@ export default function UserViewDrawer({
   user,
 }) {
   if (!user) return null;
+  const avatar = user.avatar || "";
 
   const data = [
     { label: "Họ tên", value: user.fullName },
@@ -40,6 +41,46 @@ export default function UserViewDrawer({
           background: "#fafafa",
         }}
       >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: 14,
+          }}
+        >
+          {avatar ? (
+            <img
+              src={avatar}
+              alt="avatar-user"
+              style={{
+                width: 86,
+                height: 86,
+                borderRadius: "50%",
+                objectFit: "cover",
+                border: "2px solid #e5e7eb",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                width: 86,
+                height: 86,
+                borderRadius: "50%",
+                border: "2px dashed #d1d5db",
+                background: "#fff",
+                color: "#9ca3af",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 12,
+                fontWeight: 600,
+              }}
+            >
+              No Avatar
+            </div>
+          )}
+        </div>
+
         <Title level={5} style={{ marginBottom: 16 }}>
           Thông tin người dùng
         </Title>

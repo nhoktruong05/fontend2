@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { T, fmt } from "../../constants/customerTheme";
-import { mockFoodReviews } from "../../data/mockData";
+import { mockFoodReviews } from "../../data/mockFoodReviews";
 import { EmptyState, SectionTitle } from "../../components/customer/SharedUI";
 import MenuItemCard from "../../components/customer/MenuItemCard";
 import FoodImage from "../../components/common/FoodImage";

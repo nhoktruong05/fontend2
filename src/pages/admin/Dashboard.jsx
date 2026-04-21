@@ -2,13 +2,6 @@ import React from "react";
 import "../../assets/styles/Dashboard.css";
 import UserHeader from "../../components/user/UserHeader";
 
-const statCards = [
-  { label: "Đơn hàng hôm nay", value: "128" },
-  { label: "Doanh thu hôm nay", value: "24.6M" },
-  { label: "Khách hàng mới", value: "36" },
-  { label: "Món sắp hết", value: "7" },
-];
-
 const revenueByDay = [
   { day: "T2", revenue: 12.4 },
   { day: "T3", revenue: 15.8 },
@@ -26,17 +19,37 @@ const Dashboard = () => {
   const bestDay = revenueByDay.reduce((best, current) =>
     current.revenue > best.revenue ? current : best,
   );
+  const statCards = [
+    { label: "Đơn hàng hôm nay", value: "128", sub: "+18 so với hôm qua" },
+    { label: "Doanh thu hôm nay", value: "24.6M", sub: "Đạt 92% mục tiêu ngày" },
+    { label: "Khách hàng mới", value: "36", sub: "Tập trung khung giờ 18h - 21h" },
+    { label: "Món sắp hết", value: "7", sub: "Cần bổ sung trong ca tối" },
+  ];
+  const recentActivities = [
+    "Đơn #DH2381 vừa thanh toán thành công",
+    "Bàn B12 vừa tạo yêu cầu gọi món QR",
+    "Voucher FESTIVE20 được áp dụng 5 lần hôm nay",
+    "Món “Cá hồi sốt bơ tỏi” sắp hết kho",
+  ];
 
   return (
     <section className="admin-page">
       <div className="admin-hero">
         <UserHeader
           title="Dashboard quản lý nhà hàng"
-          description="Theo dõi hiệu suất vận hành, đơn hàng và doanh thu theo thời gian thực."
+          description="Tổng quan vận hành theo thời gian thực: doanh thu, đơn hàng và hiệu suất phục vụ."
         />
       </div>
 
-  
+      <div className="admin-grid">
+        {statCards.map((item) => (
+          <div className="admin-stat" key={item.label}>
+            <p className="admin-stat-label">{item.label}</p>
+            <p className="admin-stat-value">{item.value}</p>
+            <p className="admin-stat-sub">{item.sub}</p>
+          </div>
+        ))}
+      </div>
 
       <div className="admin-dashboard-grid">
         <div className="admin-dashboard-card">
@@ -65,7 +78,7 @@ const Dashboard = () => {
 
         <div className="admin-dashboard-side">
           <div className="admin-dashboard-card">
-            <p className="admin-side-label">Tổng doanh thu tuần</p>
+            <p className="admin-side-label">Tổng doanh thu 7 ngày</p>
             <p className="admin-side-value">{totalRevenue}M</p>
             <p className="admin-side-sub">+12.4% so với tuần trước</p>
           </div>
@@ -91,6 +104,15 @@ const Dashboard = () => {
                 style={{ width: `${Math.min((bestDay.revenue / 25) * 100, 100)}%` }}
               />
             </div>
+          </div>
+
+          <div className="admin-dashboard-card">
+            <p className="admin-side-label">Hoạt động gần đây</p>
+            <ul className="admin-activity-list">
+              {recentActivities.map((activity) => (
+                <li key={activity}>{activity}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

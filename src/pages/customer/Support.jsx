@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { T } from "../../constants/customerTheme";
-import { mockFAQTopics, FAQ_ANSWERS } from "../../data/mockData";
+import { mockFAQTopics, FAQ_ANSWERS } from "../../data/mockSupportData";
 import UserHeader from "../../components/user/UserHeader";
 import "../../assets/styles/CustomerSupport.css";
 const Support = () => {

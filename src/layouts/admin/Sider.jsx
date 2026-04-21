@@ -6,11 +6,11 @@ import {
   faChartLine,
   faUsers,
   faUtensils,
+  faBoxesStacked,
   faLayerGroup,
   faTicketAlt,
   faClipboardList,
   faCalendarCheck,
-  faComments,
   faImages,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../assets/styles/Sider.css";
@@ -37,39 +37,39 @@ const adminMenuItems = [
   },
   {
     id: 4,
+    title: "Quản lý kho",
+    path: "/admin/inventory",
+    icon: faBoxesStacked,
+  },
+  {
+    id: 5,
     title: "Quản lý danh mục",
     path: "/admin/categories",
     icon: faLayerGroup,
   },
   {
-    id: 5,
+    id: 6,
     title: "Quản lý khuyến mãi",
     path: "/admin/vouchers",
     icon: faTicketAlt,
   },
   {
-    id: 6,
+    id: 7,
     title: "Quản lý đơn hàng",
     path: "/admin/orders",
     icon: faClipboardList,
   },
   {
-    id: 7,
+    id: 8,
     title: "Quản lý đặt bàn",
     path: "/admin/table-bookings",
     icon: faCalendarCheck,
   },
   {
-    id: 8,
+    id: 9,
     title: "Quản lý banner",
     path: "/admin/banners",
     icon: faImages,
-  },
-  {
-    id: 9,
-    title: "Quản lý đánh giá",
-    path: "/admin/reviews",
-    icon: faComments,
   },
 ];
 

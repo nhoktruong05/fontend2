@@ -50,6 +50,12 @@
   font-weight: 800;
 }
 
+.admin-stat-sub {
+  margin: 6px 0 0;
+  color: var(--muted-2);
+  font-size: 12px;
+}
+
 .admin-toolbar {
   display: flex;
   align-items: center;
@@ -317,6 +323,20 @@
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(135deg, var(--primary), var(--primary-600));
+}
+
+.admin-activity-list {
+  margin: 10px 0 0;
+  padding: 0 0 0 16px;
+  color: var(--text);
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.admin-activity-list li {
+  color: var(--muted);
+  line-height: 1.4;
 }
 
 .admin-view-drawer .ant-drawer-header {

@@ -10,6 +10,7 @@ import {
   faHouse,
   faClipboardList,
   faHeart,
+  faNewspaper,
   faHeadset,
   faQrcode,
   faCartShopping,
@@ -30,6 +31,7 @@ const navItems = [
   { to: "/customer", label: "Thực đơn", icon: faHouse, end: true },
   { to: "/customer/orders", label: "Đơn hàng", icon: faClipboardList },
   { to: "/customer/favorites", label: "Yêu thích", icon: faHeart },
+  { to: "/customer/blog", label: "Blog", icon: faNewspaper },
   { to: "/customer/support", label: "Hỗ trợ", icon: faHeadset },
   { to: "/customer/table-qr-samples", label: "QR Bàn", icon: faQrcode },
 ];
@@ -498,6 +500,13 @@ const Header = () => {
                 type="button"
                 onClick={() => {
                   setCartOpen(false);
+                  if (!isLoggedIn) {
+                    confirmLoginWithModal(
+                      (path) => navigate(path),
+                      () => {},
+                    );
+                    return;
+                  }
                   navigate("/customer/carts");
                 }}
                 style={{

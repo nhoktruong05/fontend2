@@ -17,7 +17,7 @@ import { T, fmt, STATUS_CFG } from "../../constants/customerTheme";
 import { EmptyState, StatusBadge } from "../../components/customer/SharedUI";
 import UserHeader from "../../components/user/UserHeader";
 import FoodImage from "../../components/common/FoodImage";
-import { mockOrders } from "../../data/mockData";
+import { mockOrders } from "../../data/mockOrders";
 import { confirmLoginWithModal } from "../../utils/authGuards";
 import { useAuth } from "../../hooks/useAuth";
 import "../../assets/styles/CustomerOrders.css";

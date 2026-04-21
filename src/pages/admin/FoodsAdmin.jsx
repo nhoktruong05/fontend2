@@ -14,12 +14,6 @@ import adminFoodService from "../../services/admin/adminFoodService";
 
 const pageSize = 5;
 
-const parseImages = (value) =>
-  String(value || "")
-    .split(/[\n,]/)
-    .map((s) => s.trim())
-    .filter(Boolean);
-
 const AdminFoods = () => {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -37,7 +31,8 @@ const AdminFoods = () => {
   const [editingRecord, setEditingRecord] = useState(null);
   const [viewRecord, setViewRecord] = useState(null);
 
-  const [form] = Form.useForm();
+  const [createForm] = Form.useForm();
+  const [editForm] = Form.useForm();
   const searchTimeout = useRef(null);
 
   // ================= LOAD =================
@@ -127,7 +122,7 @@ const AdminFoods = () => {
       });
       message.success("Thêm món thành công");
       setOpenAdd(false);
-      form.resetFields();
+      createForm.resetFields();
       fetchFoods();
     } catch {
       message.error("Thêm món thất bại");
@@ -169,7 +164,7 @@ const AdminFoods = () => {
         description="Quản lý thực đơn"
         buttonText="Thêm món"
         handleAdd={() => {
-          form.resetFields();
+          createForm.resetFields();
           setOpenAdd(true);
         }}
       />
@@ -228,7 +223,7 @@ const AdminFoods = () => {
           }}
           onEdit={(r) => {
             setEditingRecord(r);
-            form.setFieldsValue({
+            editForm.setFieldsValue({
               ...r,
               category: r.category_id,
               priceInThousand: r.price / 1000,
@@ -258,7 +253,7 @@ const AdminFoods = () => {
         onCancel={() => setOpenAdd(false)}
         onSubmit={handleAdd}
         categories={categories}
-        form={form}
+        form={createForm}
       />
 
       <FoodUpdateModal
@@ -266,7 +261,7 @@ const AdminFoods = () => {
         onCancel={() => setOpenEdit(false)}
         onSubmit={handleEdit}
         categories={categories}
-        form={form}
+        form={editForm}
         record={editingRecord}
       />
     </>

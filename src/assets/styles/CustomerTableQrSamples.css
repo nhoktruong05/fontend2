@@ -15,19 +15,20 @@
 }
 
 .table-qr-card {
-  background: #fff;
-  border: 1px solid #e7e5e1;
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e2e8f0);
   border-radius: 0.9rem;
   padding: 0.85rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
 .table-qr-title {
   margin: 0 0 0.55rem;
   font-weight: 900;
-  color: #1c1917;
+  color: var(--text, #0f172a);
 }
 
 .table-qr-image {
@@ -35,13 +36,13 @@
   height: 180px;
   object-fit: cover;
   border-radius: 0.6rem;
-  border: 1px solid #e7e5e1;
+  border: 1px solid var(--border, #e2e8f0);
 }
 
 .table-qr-link {
   margin: 0.55rem 0 0.75rem;
   font-size: 0.72rem;
-  color: #78716c;
+  color: var(--muted, #64748b);
   text-align: center;
   word-break: break-all;
 }
@@ -56,7 +57,7 @@
   flex: 1;
   border: none;
   border-radius: 0.55rem;
-  background: #ff6b35;
+  background: var(--primary, #4f46e5);
   color: #fff;
   padding: 0.5rem 0.65rem;
   font-weight: 800;
@@ -64,7 +65,7 @@
 }
 
 .table-qr-actions .ghost {
-  background: #fff;
-  color: #ff6b35;
-  border: 1px solid #ff6b35;
+  background: var(--surface, #fff);
+  color: var(--primary, #4f46e5);
+  border: 1px solid var(--primary, #4f46e5);
 }

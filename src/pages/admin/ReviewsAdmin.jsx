@@ -7,7 +7,7 @@ import AppPagination from "../../components/common/AppPagination";
 import BaseTable from "../../components/common/BaseTable";
 import TableActions from "../../components/common/TableActions";
 
-import { mockFoodReviews } from "../../data/mockData";
+import { mockFoodReviews } from "../../data/mockFoodReviews";
 import { loadSharedFoods } from "../../utils/sharedData";
 
 import "../../assets/styles/AdminPages.css";
