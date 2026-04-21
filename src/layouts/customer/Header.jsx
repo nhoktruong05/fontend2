@@ -138,6 +138,16 @@ const Header = () => {
     }
   });
 
+  const [favorites, setFavorites] = React.useState(() => {
+    try {
+      const saved = localStorage.getItem("favorites");
+      const parsed = saved ? JSON.parse(saved) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  });
+
   React.useEffect(() => {
     const syncCart = () => {
       try {
@@ -159,9 +169,34 @@ const Header = () => {
     };
   }, []);
 
+  React.useEffect(() => {
+    const syncFav = () => {
+      try {
+        const saved = localStorage.getItem("favorites");
+        const parsed = saved ? JSON.parse(saved) : [];
+        setFavorites(Array.isArray(parsed) ? parsed : []);
+      } catch {
+        setFavorites([]);
+      }
+    };
+    syncFav();
+    window.addEventListener("focus", syncFav);
+    window.addEventListener("storage", syncFav);
+    window.addEventListener(CUSTOMER_DATA_UPDATED_EVENT, syncFav);
+    return () => {
+      window.removeEventListener("focus", syncFav);
+      window.removeEventListener("storage", syncFav);
+      window.removeEventListener(CUSTOMER_DATA_UPDATED_EVENT, syncFav);
+    };
+  }, []);
+
   const cartCount = React.useMemo(() => {
     return cart.reduce((s, c) => s + (c?.qty || 0), 0);
   }, [cart]);
+
+  const favCount = React.useMemo(() => {
+    return Array.isArray(favorites) ? favorites.length : 0;
+  }, [favorites]);
 
   const cartSubtotal = React.useMemo(() => {
     return cart.reduce((s, c) => s + (Number(c?.price) || 0) * (c?.qty || 0), 0);
@@ -226,7 +261,12 @@ const Header = () => {
                 }
               }}
             >
-              <FontAwesomeIcon icon={it.icon} />
+              <span className="header-nav-icon-wrap">
+                <FontAwesomeIcon icon={it.icon} />
+                {it.to === "/customer/favorites" && favCount > 0 && (
+                  <span className="header-nav-badge">{favCount}</span>
+                )}
+              </span>
               <span>{it.label}</span>
             </NavLink>
           ))}
@@ -458,14 +498,7 @@ const Header = () => {
                 type="button"
                 onClick={() => {
                   setCartOpen(false);
-                  if (!isLoggedIn) {
-                    confirmLoginWithModal(
-                      (path) => navigate(path),
-                      () => {},
-                    );
-                    return;
-                  }
-                  navigate("/customer/table-order");
+                  navigate("/customer/carts");
                 }}
                 style={{
                   height: 40,

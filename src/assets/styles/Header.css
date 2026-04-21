@@ -328,6 +328,32 @@
   white-space: nowrap;
 }
 
+.header--customer .header-nav-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header--customer .header-nav-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface);
+  box-shadow: 0 10px 22px rgba(79, 70, 229, 0.22);
+}
+
 .header--customer .header-nav-item:hover {
   background: var(--surface-2);
   border-color: var(--border);

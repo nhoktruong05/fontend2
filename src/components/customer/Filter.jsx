@@ -1,3 +1,5 @@
+import { T } from "../../constants/customerTheme";
+
 export default function Filter({ setFilter }) {
   return (
     <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
@@ -9,7 +11,7 @@ export default function Filter({ setFilter }) {
             padding: "8px 16px",
             borderRadius: 20,
             border: "none",
-            background: "#ff6b35",
+            background: T.primary,
             color: "white",
             cursor: "pointer",
           }}
